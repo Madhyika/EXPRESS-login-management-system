@@ -4,11 +4,21 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import authRoutes from "./routes/authRoutes.js";
 import taskRoutes from "./routes/taskRoutes.js";
+import connectDB from "./config/db.js";
 
 dotenv.config();
+
 const app = express();
 
-app.use(cors({ origin: "http://localhost:8000", credentials: true }));
+connectDB();
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+    methods: "GET, POST, PUT, DELETE",
+  })
+);
 app.use(bodyParser.json());
 
 app.use("/auth", authRoutes);

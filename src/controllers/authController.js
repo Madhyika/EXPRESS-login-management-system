@@ -32,6 +32,7 @@ export const register = async (req, res) => {
 // Login User
 export const login = async (req, res) => {
   try {
+    console.log("Login request received:", req.body); 
     const { username, password } = req.body;
 
     const user = await User.findOne({ username });
@@ -42,9 +43,10 @@ export const login = async (req, res) => {
     const token = jwt.sign({ username }, process.env.SECRET_KEY, {
       expiresIn: "1h",
     });
-
+    console.log("Login successful, sending response");
     res.json({ token });
   } catch (error) {
+    console.error("Login error:", err);
     res.status(500).json({ message: "Server Error", error });
   }
 };
